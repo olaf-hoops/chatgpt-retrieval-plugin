@@ -12,11 +12,14 @@ from models.api import (
     QueryResponse,
     UpsertRequest,
     UpsertResponse,
+    AgentRequest,
 )
 from datastore.factory import get_datastore
 from services.file import get_document_from_file
 
 from models.models import DocumentMetadata, Source
+
+from agents.agent_module import get_agent_response
 
 bearer_scheme = HTTPBearer()
 BEARER_TOKEN = os.environ.get("BEARER_TOKEN")
@@ -83,6 +86,12 @@ async def upsert(
     except Exception as e:
         print("Error:", e)
         raise HTTPException(status_code=500, detail="Internal Service Error")
+
+
+@app.post("/agent")
+async def agent(request: AgentRequest):
+    response = get_agent_response(request.query_text)
+    return JSONResponse(content=response)
 
 
 @app.post(
