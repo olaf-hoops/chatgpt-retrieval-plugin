@@ -8,9 +8,9 @@ from langchain.chains.conversation.memory import ConversationBufferWindowMemory
 from langchain.agents import initialize_agent
 
 # Constants
-OPENAI_API_KEY = "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"
-PINECONE_API_KEY = "3690f713-ac87-4332-be84-1d8bec84b146"
-PINECONE_ENV = "asia-southeast1-gcp"
+OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
+PINECONE_API_KEY = os.environ.get("PINECONE_API_KEY")
+PINECONE_ENV = os.environ.get("PINECONE_ENV")
 
 # Initialize Pinecone
 pinecone.init(api_key=PINECONE_API_KEY, environment=PINECONE_ENV)
