@@ -32,3 +32,7 @@ class DeleteRequest(BaseModel):
 
 class DeleteResponse(BaseModel):
     success: bool
+    
+    
+class AgentRequest(BaseModel):
+    query_text: str
