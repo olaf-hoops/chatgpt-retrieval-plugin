@@ -19,7 +19,7 @@ from services.file import get_document_from_file
 
 from models.models import DocumentMetadata, Source
 
-#from agents.agent_module import get_agent_response
+from agents.agent_module import get_agent_response
 
 bearer_scheme = HTTPBearer()
 BEARER_TOKEN = os.environ.get("BEARER_TOKEN")
