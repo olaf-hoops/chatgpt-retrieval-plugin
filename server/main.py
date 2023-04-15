@@ -94,7 +94,7 @@ async def upsert(
 async def agent(request: AgentRequest):
     try:
         results = await get_agent_response(request.query_text)
-        return QueryResponse(results=results)
+        return {"response": result["output"]}
     except Exception as e:
         print("Error:", e)
         raise HTTPException(status_code=500, detail="Internal Service Error")
