@@ -93,7 +93,7 @@ async def upsert(
 @app.post("/agent")
 async def agent(request: AgentRequest):
     try:
-        results = get_agent_response(request.query_text)
+        results = await get_agent_response(request.query_text)
         return {"response": results["output"]}
     except Exception as e:
         print("Error:", e)
