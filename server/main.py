@@ -92,8 +92,12 @@ async def upsert(
 
 @app.post("/agent")
 async def agent(request: AgentRequest):
-    response = get_agent_response(request.query_text)
-    return JSONResponse(content=response)
+    try:
+        results = await get_agent_response(request.query_text)
+        return QueryResponse(results=results)
+    except Exception as e:
+        print("Error:", e)
+        raise HTTPException(status_code=500, detail="Internal Service Error")
 
 
 @app.post(
