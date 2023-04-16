@@ -29,8 +29,8 @@ retriever = RetrievalQA.from_chain_type(llm=llm, chain_type="stuff", retriever=v
 search = SerpAPIWrapper()
 
 # Initialize Tools
-tool_desc = "Use this tool to answer user questions about bank related topics lika BaFin."
-db_desc = "Use this tool to answer questions about current events or the current state of the world. the input to this should be a single search term."
+db_desc = "Use this tool to answer user questions about bank related topics lika BaFin."
+search_desc = "Use this tool to answer questions about current events or the current state of the world. the input to this should be a single search term."
 tools = [Tool(func=retriever.run, description=db_desc, name='Bank DB'), 
          Tool(func=search.run, description=search_desc, name='Current Search')]
 
