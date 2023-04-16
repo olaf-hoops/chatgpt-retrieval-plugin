@@ -1,4 +1,3 @@
-
 FROM python:3.10 as requirements-stage
 
 WORKDIR /tmp
@@ -15,9 +14,9 @@ WORKDIR /code
 
 COPY --from=requirements-stage /tmp/requirements.txt /code/requirements.txt
 
-# Install the requirements and the google-search-results package
+# Install the requirements and the google-search-results and google-api-python-client packages
 RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt && \
-    pip install google-search-results
+    pip install google-search-results google-api-python-client
 
 COPY . /code/
 
