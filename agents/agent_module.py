@@ -56,3 +56,4 @@ def get_agent_response(query_text: str):
 
 def deinitialize_pinecone():
     pinecone.deinit()
+
