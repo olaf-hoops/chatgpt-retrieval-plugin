@@ -7,6 +7,7 @@ from langchain.chains import RetrievalQA
 from langchain.agents import Tool
 from langchain.utilities import SerpAPIWrapper
 from langchain.chains.conversation.memory import ConversationBufferWindowMemory
+from langchain.utilities import GoogleSearchAPIWrapper
 from langchain.agents import initialize_agent
 
 # Constants
@@ -14,6 +15,8 @@ OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 PINECONE_API_KEY = os.environ.get("PINECONE_API_KEY")
 PINECONE_ENV = os.environ.get("PINECONE_ENV")
 SERPAPI_API_KEY = os.environ.get("SERPAPI_API_KEY")
+GOOGLE_CSE_ID = os.environ.get("GOOGLE_CSE_ID")
+GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
 
 # Initialize Pinecone
 pinecone.init(api_key=PINECONE_API_KEY, environment=PINECONE_ENV)
@@ -26,13 +29,14 @@ vectordb = Pinecone(index=index, embedding_function=embeddings.embed_query, text
 llm = ChatOpenAI(openai_api_key=OPENAI_API_KEY, temperature=0, model_name='gpt-3.5-turbo')
 memory = ConversationBufferWindowMemory(memory_key="chat_history", k=5, return_messages=True)
 retriever = RetrievalQA.from_chain_type(llm=llm, chain_type="stuff", retriever=vectordb.as_retriever())
-search = SerpAPIWrapper()
+#search = SerpAPIWrapper()
+search = GoogleSearchAPIWrapper()
 
 # Initialize Tools
 db_desc = "Use this tool to answer user questions about bank related topics lika BaFin."
 search_desc = "Use this tool to answer questions about current events or the current state of the world. the input to this should be a single search term."
 tools = [Tool(func=retriever.run, description=db_desc, name='Bank DB'), 
-         Tool(func=search.run, description=search_desc, name='Current Search')]
+         Tool(func=search.run, description=search_desc, name='Search Internet')]
 
 # Initialize conversational_agent
 conversational_agent = initialize_agent(
