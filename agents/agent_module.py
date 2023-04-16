@@ -13,6 +13,7 @@ from langchain.agents import initialize_agent
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 PINECONE_API_KEY = os.environ.get("PINECONE_API_KEY")
 PINECONE_ENV = os.environ.get("PINECONE_ENV")
+SERPAPI_API_KEY = os.environ.get("SERPAPI_API_KEY")
 
 # Initialize Pinecone
 pinecone.init(api_key=PINECONE_API_KEY, environment=PINECONE_ENV)
