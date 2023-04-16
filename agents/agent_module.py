@@ -5,7 +5,6 @@ from langchain.vectorstores import Pinecone
 from langchain.chat_models import ChatOpenAI
 from langchain.chains import RetrievalQA
 from langchain.agents import Tool
-from langchain.utilities import SerpAPIWrapper
 from langchain.chains.conversation.memory import ConversationBufferWindowMemory
 from langchain.utilities import GoogleSearchAPIWrapper
 from langchain.agents import initialize_agent
@@ -14,7 +13,6 @@ from langchain.agents import initialize_agent
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 PINECONE_API_KEY = os.environ.get("PINECONE_API_KEY")
 PINECONE_ENV = os.environ.get("PINECONE_ENV")
-SERPAPI_API_KEY = os.environ.get("SERPAPI_API_KEY")
 GOOGLE_CSE_ID = os.environ.get("GOOGLE_CSE_ID")
 GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
 
@@ -29,7 +27,6 @@ vectordb = Pinecone(index=index, embedding_function=embeddings.embed_query, text
 llm = ChatOpenAI(openai_api_key=OPENAI_API_KEY, temperature=0, model_name='gpt-3.5-turbo')
 memory = ConversationBufferWindowMemory(memory_key="chat_history", k=5, return_messages=True)
 retriever = RetrievalQA.from_chain_type(llm=llm, chain_type="stuff", retriever=vectordb.as_retriever())
-#search = SerpAPIWrapper()
 search = GoogleSearchAPIWrapper()
 
 # Initialize Tools
