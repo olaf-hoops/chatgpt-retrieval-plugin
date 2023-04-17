@@ -46,7 +46,7 @@ conversational_agent = initialize_agent(
     memory=memory,
 )
 
-sys_msg = "You are a helpful Volksbank assistant that answers the user's questions. It's very important that everytime you generate a 'response' it is in german language."
+sys_msg = "You are a helpful assistant that answers the user's questions. It's very important that everytime you generate a 'response' it is in german language."
 prompt = conversational_agent.agent.create_prompt(system_message=sys_msg, tools=tools)
 conversational_agent.agent.llm_chain.prompt = prompt
 
