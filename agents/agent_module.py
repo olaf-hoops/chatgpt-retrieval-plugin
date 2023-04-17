@@ -30,9 +30,9 @@ retriever = RetrievalQA.from_chain_type(llm=llm, chain_type="stuff", retriever=v
 search = GoogleSearchAPIWrapper()
 
 # Initialize Tools
-db_desc = "Use this tool to answer user questions about Volksbank internals (e.g. internal guidelines, sales data or work instructions) and related topics lika BaFin publications."
+db_desc = "Use this tool to answer user questions about Volksbank internals (e.g. internal guidelines, sales data, work instructions, bankinternal tools) and related topics lika BaFin publications."
 search_desc = "Use this tool to answer questions about current events or the current state of the world. the input to this should be a single search term."
-tools = [Tool(func=retriever.run, description=db_desc, name='Bank DB'), 
+tools = [Tool(func=retriever.run, description=db_desc, name='Bank internal Databank'), 
          Tool(func=search.run, description=search_desc, name='Search Internet')]
 
 # Initialize conversational_agent
@@ -46,7 +46,7 @@ conversational_agent = initialize_agent(
     memory=memory,
 )
 
-sys_msg = "You are a helpful assistant that answers the user's questions. It's very important that everytime you generate a 'response' it is in german language."
+sys_msg = "You are a helpful assistant that answers the user's questions. Use the 'Bank internal Databank' first to retrieve information about unknown terms. It's very important that everytime you generate a 'response' it is in german language!"
 prompt = conversational_agent.agent.create_prompt(system_message=sys_msg, tools=tools)
 conversational_agent.agent.llm_chain.prompt = prompt
 
