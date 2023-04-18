@@ -30,7 +30,7 @@ retriever = RetrievalQA.from_chain_type(llm=llm, chain_type="stuff", retriever=v
 search = GoogleSearchAPIWrapper()
 
 # Initialize Tools
-db_desc = "Use this tool to answer user questions about Volksbank internals (e.g. internal guidelines, sales data, work instructions, bankinternal tools) and related topics lika BaFin publications."
+db_desc = "Use this tool to answer user questions about Volksbank internals and latest BaFin publications (e.g. internal guidelines, sales data, work instructions, bankinternal tools, BaFin publications)"
 search_desc = "Use this tool to answer questions about current events or the current state of the world. the input to this should be a single search term."
 tools = [Tool(func=retriever.run, description=db_desc, name='Bank internal Databank'), 
          Tool(func=search.run, description=search_desc, name='Search Internet')]
