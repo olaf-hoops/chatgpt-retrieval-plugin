@@ -38,12 +38,12 @@ def validate_token(credentials: HTTPAuthorizationCredentials = Depends(bearer_sc
 app = FastAPI(dependencies=[Depends(validate_token)])
 
 app.add_middleware(
-       CORSMiddleware,
-       allow_origins=["http://127.0.0.1:5500"],  # Hier die erlaubten Domains angeben
-       allow_credentials=True,
-       allow_methods=["*"],  # Optional: Sie können auch bestimmte HTTP-Methoden erlauben
-       allow_headers=["*"],  # Optional: Sie können auch bestimmte Header erlauben
-   )
+    CORSMiddleware,
+    allow_origins=["http://127.0.0.1:5500"],  # Allowed domains
+    allow_credentials=True,
+    allow_methods=["*"],  # Optionally, allow specific HTTP methods
+    allow_headers=["*"],  # Optionally, allow specific headers
+)
 
 app.mount("/.well-known", StaticFiles(directory=".well-known"), name="static")
 
