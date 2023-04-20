@@ -36,7 +36,6 @@ def validate_token(credentials: HTTPAuthorizationCredentials = Depends(bearer_sc
 
 
 app = FastAPI(dependencies=[Depends(validate_token)])
-app.mount("/.well-known", StaticFiles(directory=".well-known"), name="static")
 
 app.add_middleware(
        CORSMiddleware,
@@ -45,6 +44,8 @@ app.add_middleware(
        allow_methods=["*"],  # Optional: Sie können auch bestimmte HTTP-Methoden erlauben
        allow_headers=["*"],  # Optional: Sie können auch bestimmte Header erlauben
    )
+
+app.mount("/.well-known", StaticFiles(directory=".well-known"), name="static")
 
 # Create a sub-application, in order to access just the query endpoint in an OpenAPI schema, found at http://0.0.0.0:8000/sub/openapi.json when the app is running locally
 sub_app = FastAPI(
