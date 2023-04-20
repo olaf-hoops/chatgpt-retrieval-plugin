@@ -6,6 +6,7 @@ import uvicorn
 from fastapi import FastAPI, File, Form, HTTPException, Depends, Body, UploadFile
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
 
 from models.api import (
     DeleteRequest,
@@ -36,6 +37,14 @@ def validate_token(credentials: HTTPAuthorizationCredentials = Depends(bearer_sc
 
 app = FastAPI(dependencies=[Depends(validate_token)])
 app.mount("/.well-known", StaticFiles(directory=".well-known"), name="static")
+
+app.add_middleware(
+       CORSMiddleware,
+       allow_origins=["http://127.0.0.1:5500"],  # Hier die erlaubten Domains angeben
+       allow_credentials=True,
+       allow_methods=["*"],  # Optional: Sie können auch bestimmte HTTP-Methoden erlauben
+       allow_headers=["*"],  # Optional: Sie können auch bestimmte Header erlauben
+   )
 
 # Create a sub-application, in order to access just the query endpoint in an OpenAPI schema, found at http://0.0.0.0:8000/sub/openapi.json when the app is running locally
 sub_app = FastAPI(
