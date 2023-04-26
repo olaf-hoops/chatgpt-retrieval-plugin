@@ -24,7 +24,7 @@ index = pinecone.Index(index_name)
 # Initialize components
 embeddings = OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY)
 vectordb = Pinecone(index=index, embedding_function=embeddings.embed_query, text_key="text")
-llm = ChatOpenAI(openai_api_key=OPENAI_API_KEY, temperature=0.6, model_name='gpt-3.5-turbo')
+llm = ChatOpenAI(openai_api_key=OPENAI_API_KEY, temperature=0.0, model_name='gpt-3.5-turbo')
 memory = ConversationBufferWindowMemory(memory_key="chat_history", k=3, return_messages=True)
 retriever = RetrievalQA.from_chain_type(llm=llm, chain_type="stuff", retriever=vectordb.as_retriever())
 search = GoogleSearchAPIWrapper()
@@ -46,7 +46,7 @@ conversational_agent = initialize_agent(
     memory=memory,
 )
 
-sys_msg = "You are a helpful assistant that answers the user's questions. Use the 'Bank internal Databank' first to retrieve information about unknown terms. It's very important that everytime you generate a 'response' it is in german language!"
+sys_msg = "You are a helpful assistant that answers the user's questions. Use the 'Bank internal Databank' first to retrieve internal information. It's very important that everytime you generate a 'response' it is in german language!"
 prompt = conversational_agent.agent.create_prompt(system_message=sys_msg, tools=tools)
 conversational_agent.agent.llm_chain.prompt = prompt
 
