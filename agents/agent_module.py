@@ -24,8 +24,8 @@ index = pinecone.Index(index_name)
 # Initialize components
 embeddings = OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY)
 vectordb = Pinecone(index=index, embedding_function=embeddings.embed_query, text_key="text")
-llm = ChatOpenAI(openai_api_key=OPENAI_API_KEY, temperature=0, model_name='gpt-3.5-turbo')
-memory = ConversationBufferWindowMemory(memory_key="chat_history", k=5, return_messages=True)
+llm = ChatOpenAI(openai_api_key=OPENAI_API_KEY, temperature=0.6, model_name='gpt-3.5-turbo')
+memory = ConversationBufferWindowMemory(memory_key="chat_history", k=3, return_messages=True)
 retriever = RetrievalQA.from_chain_type(llm=llm, chain_type="stuff", retriever=vectordb.as_retriever())
 search = GoogleSearchAPIWrapper()
 
@@ -41,7 +41,7 @@ conversational_agent = initialize_agent(
     tools=tools,
     llm=llm,
     verbose=True,
-    max_iterations=2,
+    max_iterations=4,
     early_stopping_method="generate",
     memory=memory,
 )
